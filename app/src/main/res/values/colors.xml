@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="blue" type="color">#008EE3</item>
+    <item name="colorPrimary" type="color">#008EE3</item>
+    <item name="colorPrimaryDark" type="color">#ff006eb8</item>
+    <item name="colorAccent" type="color">#008EE3</item>
+    <item name="drawerBgColor" type="color">#fff</item>
+</resources>

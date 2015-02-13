@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="drawer_strings">
+        <item>Home</item>
+        <item>Board</item>
+        <item>Planning</item>
+        <item>Settings</item>
+    </string-array>
+    <string-array name="tabs">
+        <item>Modules</item>
+        <item>Activities</item>
+        <item>Projects</item>
+        <item>Susies</item>
+        <item>Marks</item>
+        <item>Trombi</item>
+    </string-array>
+    <string-array name="planning_week">
+        <item>Monday</item>
+        <item>Thursday</item>
+        <item>Wednesday</item>
+        <item>Tuesday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+
+    <string name="app_name">EpiAndroid</string>
+    <string name="title_activity_main">Home</string>
+    <string name="action_settings">Settings</string>
+    <string name="login_text">Login</string>
+    <string name="password_text">Password</string>
+    <string name="login_button">Log In</string>
+    <string name="login_error">Login or Password is incorrect.</string>
+    <string name="base_url">http://epitech-api.herokuapp.com</string>
+    <string name="user_learned_string">user_learned_drawer</string>
+    <string name="token_string">token</string>
+    <string name="drawer_profile_image_desc">Profile Image</string>
+    <string name="login_textview">Log time : 0h\nlogin</string>
+    <string name="username_textview">Firstname Lastname</string>
+    <string name="title_activity_board">Board</string>
+    <string name="title_activity_planning">Planning</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="raw_icon_desc">drawer_icon</string>
+    <string name="title_activity_login">Login</string>
+    <string name="home_modules_button">Modules</string>
+    <string name="home_activities_button">Activities</string>
+    <string name="home_projects_button">Projects</string>
+    <string name="home_susies_button">Susies</string>
+    <string name="home_marks_button">Marks</string>
+    <string name="left"><![CDATA[<]]></string>
+    <string name="right"><![CDATA[>]]></string>
+    <string name="date_proto">YYYY/MM/JJ</string>
+    <string name="to">to</string>
+    <string name="menu_notification">Notifications</string>
+    <string name="susie_all">all</string>
+    <string name="susie_free">free</string>
+    <string name="susie_registered">registered</string>
+    <string name="title_activity_notif">Notifications</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="registration">Register</string>
+    <string name="pref_logout_string">Logout</string>
+    <string name="pref_logout_summary_string">Delete all cached user data</string>
+    <string name="planning_left_title">Previous week</string>
+    <string name="planning_right_title">Next week</string>
+    <string name="planning_today_title">Today</string>
+    <string name="home_trombi_button">Trombi</string>
+    <string name="board_date_validation">Ok</string>
+    <string name="token_button_string">Token</string>
+    <string name="unregistration">unregistration</string>
+    <string name="title_activity_activitie_item">ActivitieItemActivity</string>
+    <string name="title_activity_modules_item">ModulesItemActivity</string>
+    <string name="token_edittext_string">00000000</string>
+
+</resources>

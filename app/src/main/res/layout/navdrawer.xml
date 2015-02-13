@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/drawerList"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/drawer_width"
+    android:layout_height="match_parent"
+    android:background="@color/drawerBgColor"
+    android:layout_gravity="start"
+    android:clickable="true">
+
+    <LinearLayout
+        android:id="@+id/drawer_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:orientation="vertical"
+        android:useDefaultMargins="false">
+
+        <ImageView
+            android:layout_marginTop="@dimen/drawer_margin_top"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:background="?android:selectableItemBackground"
+            android:clickable="true"
+            android:id="@+id/profile_image"
+            android:src="@drawable/profile"
+            android:scaleType="fitStart"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/drawer_profile_image_desc"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:padding="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/username_textview"
+            android:id="@+id/usernameText"
+            android:singleLine="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead.Inverse"
+            android:paddingLeft="16dp"
+            android:paddingTop="4dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_textview"
+            android:id="@+id/loginText"
+            android:singleLine="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+            android:paddingBottom="20dp"
+            android:paddingLeft="16dp"
+            android:lines="2" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/drawer_recycler"
+        android:layout_below="@+id/drawer_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>
