@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -21,8 +22,11 @@ import android.widget.TextView;
 
 import com.example.kant.artme.Drawer.DrawerAdapter;
 import com.example.kant.artme.Drawer.DrawerRawInfo;
+import com.example.kant.artme.Tabs.ManageEventFragment;
+import com.example.kant.artme.Tabs.PostFragment;
 import com.example.kant.artme.Tabs.RecyclerViewScrollListener;
 import com.example.kant.artme.Tabs.ResearchFragment;
+import com.example.kant.artme.Tabs.UpcomingEventFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +51,8 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
     protected LruCache<String, Bitmap> mMemoryCache;
     private ImageView profileImage;
     private RecyclerViewScrollListener recyclerScrollListener;
-    private int currentFragment = 0;
+    private Fragment currentFragment = null;
+    private int currentFragmentId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,7 +189,7 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
         getActionBarToolbar();
     }
 
-    protected Toolbar getActionBarToolbar() {
+    public Toolbar getActionBarToolbar() {
         if (toolbar == null) {
             toolbar = (Toolbar) findViewById(R.id.actionBarToolbar);
             if (toolbar != null) {
@@ -196,7 +201,7 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
 
     @Override
     public void itemClicked(final int position) {
-        if (position == currentFragment) {
+        if (position == currentFragmentId) {
             mDrawerLayout.closeDrawer(Gravity.START);
             return;
         }
@@ -222,32 +227,37 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
 
     protected void goToNavDrawerItem(int position, final int tabId) {
         Intent intent;
-        currentFragment = position;
+        currentFragmentId = position;
+
+        if (currentFragment != null)
+            getSupportFragmentManager().beginTransaction()
+                    .remove(currentFragment)
+                    .commit();
+
         switch (position) {
             case RESEARCH_ID:
-                getFragmentManager().beginTransaction()
-                        .add(R.id.container, new ResearchFragment())
+                currentFragment = new ResearchFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, currentFragment)
                         .commit();
-                //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
             case POST_ID:
-                // TODO : BoardActivity
-                // intent = new Intent(this, BoardActivity.class);
-                // intent.putExtra("tabId", tabId);
-                // startActivity(intent);
-                //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                // finish();
+                currentFragment = new PostFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, currentFragment)
+                        .commit();
                 break;
             case MANAGE_ID:
-                // TODO : Other Activity
-                // intent = new Intent(this, PlanningActivity.class);
-                // startActivity(intent);
-                //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                // finish();
+                currentFragment = new ManageEventFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, currentFragment)
+                        .commit();
                 break;
             case UPCOMING_ID:
-                intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
+                currentFragment = new UpcomingEventFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, currentFragment)
+                        .commit();
                 break;
             case SETTINGS_ID:
                 intent = new Intent(this, SettingsActivity.class);

@@ -1,7 +1,7 @@
 package com.example.kant.artme.Tabs;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by Shaft on 13/02/2015.
  */
-public class ResearchEvent extends Fragment implements ResearchAdapter.ClickListener{
+public class ResearchFragment extends Fragment implements ResearchAdapter.ClickListener{
 
     private List<Event> adapterData = new ArrayList<>();
     private ResearchAdapter mResearchAdapter;
@@ -25,6 +25,9 @@ public class ResearchEvent extends Fragment implements ResearchAdapter.ClickList
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_board, container, false);
+
+        ((BaseActivity) getActivity()).getActionBarToolbar().setTitle(R.string.title_activity_research);
+        ((BaseActivity) getActivity()).setSupportActionBar(((BaseActivity) getActivity()).getActionBarToolbar());
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.board_recycler);
         mResearchAdapter = new ResearchAdapter(getActivity(), adapterData);
@@ -34,6 +37,13 @@ public class ResearchEvent extends Fragment implements ResearchAdapter.ClickList
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setOnScrollListener(((BaseActivity) getActivity()).getRecyclerScrollListener());
 
+        Event event1 = new Event();
+        event1.title = "test1";
+        Event event2 = new Event();
+        event2.title = "test2";
+        adapterData.add(event1);
+        adapterData.add(event2);
+        mResearchAdapter.notifyDataSetChanged();
         return view;
     }
 
