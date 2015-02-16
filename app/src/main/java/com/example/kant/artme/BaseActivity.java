@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.kant.artme.Drawer.DrawerAdapter;
 import com.example.kant.artme.Drawer.DrawerRawInfo;
 import com.example.kant.artme.Tabs.RecyclerViewScrollListener;
+import com.example.kant.artme.Tabs.ResearchFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +34,11 @@ import java.util.List;
 
 public class BaseActivity extends ActionBarActivity implements DrawerAdapter.ClickListener {
 
-    protected static final int HOME_ID = 0;
-    protected static final int BOARD_ID = 1;
-    protected static final int PLANNING_ID = 2;
-    protected static final int SETTINGS_ID = 3;
+    protected static final int RESEARCH_ID = 0;
+    protected static final int POST_ID = 1;
+    protected static final int MANAGE_ID = 2;
+    protected static final int UPCOMING_ID = 3;
+    protected static final int SETTINGS_ID = 4;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
@@ -45,10 +47,12 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
     protected LruCache<String, Bitmap> mMemoryCache;
     private ImageView profileImage;
     private RecyclerViewScrollListener recyclerScrollListener;
+    private int currentFragment = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_base);
         mHandler = new Handler();
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
@@ -136,6 +140,7 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
                 R.drawable.ic_home_grey,
                 R.drawable.ic_assignment_grey,
                 R.drawable.ic_event_grey,
+                R.drawable.ic_settings_grey,
                 R.drawable.ic_settings_grey};
         String[] titles = context.getResources().getStringArray(R.array.drawer_strings);
 
@@ -189,13 +194,9 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
         return toolbar;
     }
 
-    protected int getSelfNavDrawerItem() {
-        return 0;
-    }
-
     @Override
     public void itemClicked(final int position) {
-        if (position == getSelfNavDrawerItem()) {
+        if (position == currentFragment) {
             mDrawerLayout.closeDrawer(Gravity.START);
             return;
         }
@@ -221,14 +222,15 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
 
     protected void goToNavDrawerItem(int position, final int tabId) {
         Intent intent;
+        currentFragment = position;
         switch (position) {
-            case HOME_ID:
-                intent = new Intent(this, HomeActivity.class);
-                startActivity(intent);
+            case RESEARCH_ID:
+                getFragmentManager().beginTransaction()
+                        .add(R.id.container, new ResearchFragment())
+                        .commit();
                 //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                finish();
                 break;
-            case BOARD_ID:
+            case POST_ID:
                 // TODO : BoardActivity
                 // intent = new Intent(this, BoardActivity.class);
                 // intent.putExtra("tabId", tabId);
@@ -236,12 +238,16 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
                 //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 // finish();
                 break;
-            case PLANNING_ID:
+            case MANAGE_ID:
                 // TODO : Other Activity
                 // intent = new Intent(this, PlanningActivity.class);
                 // startActivity(intent);
                 //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 // finish();
+                break;
+            case UPCOMING_ID:
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 break;
             case SETTINGS_ID:
                 intent = new Intent(this, SettingsActivity.class);

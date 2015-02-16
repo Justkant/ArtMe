@@ -2,10 +2,11 @@
 <resources>
 
     <string-array name="drawer_strings">
-        <item>Home</item>
-        <item>Board</item>
-        <item>Planning</item>
-        <item>Settings</item>
+        <item>Research Events</item>
+        <item>Post Event</item>
+        <item>Manage Events</item>
+        <item>Upcoming Events</item>
+        <item>Preferences</item>
     </string-array>
     <string-array name="tabs">
         <item>Modules</item>

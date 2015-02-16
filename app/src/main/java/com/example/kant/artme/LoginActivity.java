@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import retrofit.RestAdapter;
-
 public class LoginActivity extends BaseActivity {
 
     private EditText mLogin;
@@ -86,7 +84,7 @@ public class LoginActivity extends BaseActivity {
                 mBtnLogin.setEnabled(false);
 
                 //TODO : ASYNC REQUEST
-                startActivity(new Intent(getBaseContext(), HomeActivity.class));
+                startActivity(new Intent(getBaseContext(), BaseActivity.class));
                 finish();
             }
         });

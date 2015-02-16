@@ -30,12 +30,12 @@ public class SlidingTabPagerAdapter extends FragmentPagerAdapter {
     // TODO : UPDATE WITH YOUR FRAGMENTS
     @Override
     public Fragment getItem(int position) {
-        /*Fragment fragment = null;
+        Fragment fragment = null;
         switch (position) {
             case MODULES_POS:
-                fragment = new ModulesFragment();
+                fragment = new ResearchEvent();
                 break;
-            case ACTIVITIES_POS:
+         /*   case ACTIVITIES_POS:
                 fragment = new ActivitiesFragment();
                 break;
             case PROJECTS_POS:
@@ -49,10 +49,9 @@ public class SlidingTabPagerAdapter extends FragmentPagerAdapter {
                 break;
             case TROMBI_POS:
                 fragment = new TrombiFragment();
-                break;
+                break;*/
         }
-        return fragment;*/
-        return null;
+        return fragment;
     }
 
     @Override
