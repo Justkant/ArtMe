@@ -39,8 +39,14 @@ public class ResearchFragment extends Fragment implements ResearchAdapter.ClickL
 
         Event event1 = new Event();
         event1.title = "test1";
+        event1.description = "toto blabla";
+        event1.date = "01/01/1001";
+        event1.adress = "Dans ton Uc";
         Event event2 = new Event();
         event2.title = "test2";
+        event2.description = "toto blabla";
+        event2.date = "01/01/1001";
+        event2.adress = "Dans ton Uc";
         adapterData.add(event1);
         adapterData.add(event2);
         mResearchAdapter.notifyDataSetChanged();
