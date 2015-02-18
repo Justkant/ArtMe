@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.kant.epiandroid.EventItemActivity">
+
+    <include layout="@layout/app_bar" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="140dp"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/small_magin"
+                android:paddingRight="@dimen/small_magin">
+
+                <ImageView
+                    android:id="@+id/title_pic"
+                    android:layout_width="@dimen/pic_title_size"
+                    android:layout_height="@dimen/pic_title_size"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/small_magin" />
+
+                <LinearLayout
+                    android:id="@+id/text_container"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/small_magin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/event_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/small_magin"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/small_magin"
+                        android:fontFamily="@string/font_fontFamily_medium"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/event_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/small_magin"
+                android:layout_marginRight="@dimen/small_magin"
+                android:layout_marginTop="@dimen/small_magin"
+                android:fontFamily="@string/font_fontFamily_medium"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:background="@color/primary_text_disabled_material_light"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/participant"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="@dimen/small_magin"
+                    android:layout_marginRight="@dimen/small_magin"
+                    android:layout_weight="0.5"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/participate"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="@dimen/small_magin"
+                    android:layout_marginRight="@dimen/small_magin"
+                    android:layout_weight="0.5"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:gravity="center"
+                    android:text="I'm In !"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
