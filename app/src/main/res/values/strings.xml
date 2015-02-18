@@ -76,5 +76,6 @@
     <string name="title_activity_activitie_item">ActivitieItemActivity</string>
     <string name="title_activity_modules_item">ModulesItemActivity</string>
     <string name="token_edittext_string">00000000</string>
+    <string name="title_event_item_activity">TOTO</string>
 
 </resources>

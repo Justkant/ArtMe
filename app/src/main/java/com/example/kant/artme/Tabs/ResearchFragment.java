@@ -1,5 +1,6 @@
 package com.example.kant.artme.Tabs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.kant.artme.BaseActivity;
+import com.example.kant.artme.EventItemActivity;
 import com.example.kant.artme.R;
 
 import java.util.ArrayList;
@@ -55,10 +57,8 @@ public class ResearchFragment extends Fragment implements ResearchAdapter.ClickL
 
     @Override
     public void itemClicked(int position) {
-
-        //TODO INTENT ITEMEVENT
-/*        Intent intent = new Intent(getActivity(), ProjectItemActivity.class);
-        intent.putExtra("item", adapterData.get(position));
-        startActivity(intent);*/
+        Intent intent = new Intent(getActivity(), EventItemActivity.class);
+//        intent.putExtra("item", adapterData.get(position));
+        startActivity(intent);
     }
 }
