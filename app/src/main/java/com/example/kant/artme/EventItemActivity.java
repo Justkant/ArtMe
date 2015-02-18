@@ -26,6 +26,16 @@ public class EventItemActivity extends BaseActivity implements BaseSliderView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_item);
 
+        Toolbar toolbar = getActionBarToolbar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setSubtitle(R.string.title_item);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         //SLIDER
         mDemoSlider = (SliderLayout)findViewById(R.id.slider);
         HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
@@ -52,20 +62,8 @@ public class EventItemActivity extends BaseActivity implements BaseSliderView.On
         mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mDemoSlider.setCustomAnimation(new DescriptionAnimation());
         mDemoSlider.setDuration(4000);
+    // FIN SLIDER
 
-
-
-
-
-        Toolbar toolbar = getActionBarToolbar();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setSubtitle(R.string.title_event_item_activity);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
 
         ((TextView) findViewById(R.id.event_title)).setText("TOTO");
         ((TextView) findViewById(R.id.event_desc)).setText("DESCRiPTIOn blaaaa blaaablaaaaaaaaaaaaaaaaaaa balbla lblalbla blla blalbla lbla lbllblalbllballlllaaaaaaaaaaaaaaaaaaaaaaaa lalblabl alblalb lall ablblalblalblbalb abla balbla lblalb alblal ablalbla llab alb alblala balblall blab lalblalblalblabl alga");
