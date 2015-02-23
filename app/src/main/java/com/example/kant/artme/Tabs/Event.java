@@ -1,5 +1,7 @@
 package com.example.kant.artme.Tabs;
 
+import com.example.kant.artme.ArtmeAPI.User;
+
 import java.io.Serializable;
 import java.util.List;
 

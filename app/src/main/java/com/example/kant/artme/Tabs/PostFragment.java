@@ -1,29 +1,122 @@
 package com.example.kant.artme.Tabs;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.ImageView;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.example.kant.artme.BaseActivity;
 import com.example.kant.artme.R;
+
+import java.io.File;
+import java.util.HashMap;
 
 /**
  * Created by Shaft on 16/02/2015.
  */
-public class PostFragment extends Fragment {
+public class PostFragment extends Fragment implements BaseSliderView.OnSliderClickListener {
+
+    private static final int RESULT_LOAD_IMAGE_B = 2;
+    private static int RESULT_LOAD_IMAGE = 1;
+    private View v;
+
+    //loader multiple
+    private String file_path = "";
+    private HashMap<String, Integer> file_maps = new HashMap<String, Integer>();
+    private SliderLayout mDemoSlider;
+    private int nb_pic_loaded = 0;
+
 
     @Override
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.post_fragment, container, false);
+        v = view;
 
         ((BaseActivity) getActivity()).getActionBarToolbar().setTitle(R.string.title_activity_post);
         ((BaseActivity) getActivity()).setSupportActionBar(((BaseActivity) getActivity()).getActionBarToolbar());
 
-        ((TextView) view.findViewById(R.id.title)).setText("Test Title");
+        ((Button) view.findViewById(R.id.load)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
+            }
+        });
+
+
+        //test custom gallery
+        mDemoSlider = (SliderLayout) v.findViewById(R.id.slider);
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setDuration(4000);
+        mDemoSlider.stopAutoCycle();
+        ((Button) view.findViewById(R.id.load_b)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nb_pic_loaded += 1;
+                if (nb_pic_loaded > 1)
+                    mDemoSlider.startAutoCycle();
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, RESULT_LOAD_IMAGE_B);
+            }
+        });
+
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            ImageView imageView = (ImageView) v.findViewById(R.id.loaded_pic);
+            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+        } else if (requestCode == RESULT_LOAD_IMAGE_B && resultCode == Activity.RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            file_path = picturePath;
+            DefaultSliderView defaultSliderView = new DefaultSliderView(getActivity());
+            defaultSliderView
+                    .image(new File(file_path))
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(this);
+            //Var envoyer au onSliderClick
+/*            textSliderView.getBundle()
+                    .putString("extra",name); */
+
+            mDemoSlider.addSlider(defaultSliderView);
+        }
+
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+       // Toast.makeText(getActivity(), slider.getBundle().get("extra") + "", Toast.LENGTH_SHORT).show();
     }
 }

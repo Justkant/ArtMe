@@ -3,17 +3,20 @@ package com.example.kant.artme;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class SettingsActivity extends BaseActivity {
+public class SettingsActivity extends ActionBarActivity {
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        Toolbar toolbar = getActionBarToolbar();
+        toolbar = (Toolbar) findViewById(R.id.actionBarToolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setSubtitle(R.string.title_activity_settings);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

@@ -1,4 +1,7 @@
-package com.example.kant.artme.Tabs;
+package com.example.kant.artme.ArtmeAPI;
+
+import com.example.kant.artme.Tabs.Event;
+import com.example.kant.artme.Tabs.Group;
 
 import java.io.Serializable;
 import java.util.List;

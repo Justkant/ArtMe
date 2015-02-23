@@ -1,6 +1,7 @@
 package com.example.kant.artme;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,8 +18,9 @@ import java.util.HashMap;
 /**
  * Created by Shaft on 17/02/2015.
  */
-public class EventItemActivity extends BaseActivity implements BaseSliderView.OnSliderClickListener {
+public class EventItemActivity extends ActionBarActivity implements BaseSliderView.OnSliderClickListener {
 
+    private Toolbar toolbar;
     private SliderLayout mDemoSlider;
 
     @Override
@@ -26,9 +28,10 @@ public class EventItemActivity extends BaseActivity implements BaseSliderView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_item);
 
-        Toolbar toolbar = getActionBarToolbar();
+        toolbar = (Toolbar) findViewById(R.id.actionBarToolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setSubtitle(R.string.title_item);
+        toolbar.setSubtitle(R.string.title_activity_settings);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

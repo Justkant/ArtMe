@@ -14,12 +14,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.LruCache;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kant.artme.ArtmeAPI.ArtmeAPI;
+import com.example.kant.artme.ArtmeAPI.User;
 import com.example.kant.artme.Drawer.DrawerAdapter;
 import com.example.kant.artme.Drawer.DrawerRawInfo;
 import com.example.kant.artme.Tabs.ManageEventFragment;
@@ -30,6 +33,11 @@ import com.example.kant.artme.Tabs.UpcomingEventFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by Quentin on 23/01/2015.
@@ -53,6 +61,9 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
     private RecyclerViewScrollListener recyclerScrollListener;
     private Fragment currentFragment = null;
     private int currentFragmentId = -1;
+    private RestAdapter restAdapter;
+    private ArtmeAPI api;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +75,28 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
             ab.setDisplayHomeAsUpEnabled(true);
         }
         mMemoryCache = ((MyApplication) getApplication()).mMemoryCache;
+
+        //API
+        restAdapter = new RestAdapter.Builder()
+                .setEndpoint(getString(R.string.base_url))
+                .build();
+        api = restAdapter.create(ArtmeAPI.class);
+        Log.d("TEST ===>", "BITE");
+        api.userGet(new Callback<User>() {
+            @Override
+            public void success(User user, Response response) {
+                Log.d("TEST ===>", user.last_name);
+
+                TextView usernametext = (TextView) findViewById(R.id.usernameText);
+                usernametext.setText(user.last_name + " " + user.first_name);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                Log.d("FAIL", retrofitError.getMessage());
+            }
+        });
+
     }
 
     protected void setupDrawer() {
@@ -132,9 +165,6 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
             usernametext.setText(MySharedPreferences.readToPreferences(this, "userName",
                     getString(R.string.username_textview)));
 
-            TextView logintext = (TextView) findViewById(R.id.loginText);
-            logintext.setText(MySharedPreferences.readToPreferences(this, "userLogtime", "Log time : 0h") + "\n" +
-                    MySharedPreferences.readToPreferences(this, "userLogin", "login"));
         }
     }
 
@@ -209,6 +239,7 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
         if (isSpecialItem(position)) {
             goToNavDrawerItem(position, 0);
         } else {
+            currentFragmentId = position;
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -227,7 +258,6 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
 
     protected void goToNavDrawerItem(int position, final int tabId) {
         Intent intent;
-        currentFragmentId = position;
 
         if (currentFragment != null)
             getSupportFragmentManager().beginTransaction()

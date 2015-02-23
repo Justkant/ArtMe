@@ -33,7 +33,7 @@
     <string name="password_text">Password</string>
     <string name="login_button">Log In</string>
     <string name="login_error">Login or Password is incorrect.</string>
-    <string name="base_url">http://epitech-api.herokuapp.com</string>
+    <string name="base_url">http://192.168.0.10/artme-api</string>
     <string name="user_learned_string">user_learned_drawer</string>
     <string name="token_string">token</string>
     <string name="drawer_profile_image_desc">Profile Image</string>
@@ -78,5 +78,11 @@
     <string name="token_edittext_string">00000000</string>
     <string name="title_event_item_activity">TOTO</string>
     <string name="title_item">TOTO</string>
+    <string name="title_event_post">Title</string>
+    <string name="desc_event_post">Description</string>
+    <string name="date_event_post">Date</string>
+    <string name="hour_event_post">Hour</string>
+    <string name="location_event_post">Location</string>
+    <string name="adress_event_post">Adress</string>
 
 </resources>
