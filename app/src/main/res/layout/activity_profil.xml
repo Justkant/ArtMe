@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/app_bar" />
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="140dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/small_magin"
+            android:paddingRight="@dimen/small_magin">
+
+            <ImageView
+                android:id="@+id/profile_pic"
+                android:layout_width="@dimen/pic_title_size"
+                android:layout_height="@dimen/pic_title_size"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/small_magin" />
+
+            <LinearLayout
+                android:id="@+id/text_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/small_magin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@string/font_fontFamily_medium"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/small_magin"
+            android:layout_marginRight="@dimen/small_magin"
+            android:layout_marginTop="@dimen/small_magin"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/title_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/small_magin"
+            android:layout_marginRight="@dimen/small_magin"
+            android:layout_marginTop="@dimen/small_magin"
+            android:fontFamily="@string/font_fontFamily_medium"
+            android:text="Group List"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:id="@+id/groups"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/add_grp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:hint="Add Group" />
+
+            <Button
+                android:id="@+id/rm_grp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:hint="Remove Group" />
+
+            <Button
+                android:id="@+id/create_grp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:hint="Create Group" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/small_magin">
+
+            <Button
+                android:id="@+id/passed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:hint="Passed Events"
+                android:layout_weight="0.5"/>
+
+            <Button
+                android:id="@+id/up"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:hint="Upcomming Events"
+                android:layout_weight="0.5"/>
+
+            </LinearLayout>
+
+        <Button
+            android:id="@+id/sub"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:hint="Subscribe Events"/>
+
+    </LinearLayout>
+</ScrollView>
+

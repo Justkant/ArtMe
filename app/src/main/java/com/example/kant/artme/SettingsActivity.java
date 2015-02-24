@@ -18,7 +18,7 @@ public class SettingsActivity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.actionBarToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setSubtitle(R.string.title_activity_settings);
+        toolbar.setTitle(R.string.title_activity_settings);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

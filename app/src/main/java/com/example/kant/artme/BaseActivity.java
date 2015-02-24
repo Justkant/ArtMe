@@ -85,10 +85,13 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
         api.userGet(new Callback<User>() {
             @Override
             public void success(User user, Response response) {
-                Log.d("TEST ===>", user.last_name);
+                Log.d("TEST ===>", user.last_name + user.first_name);
 
                 TextView usernametext = (TextView) findViewById(R.id.usernameText);
-                usernametext.setText(user.last_name + " " + user.first_name);
+                usernametext.setText(user.last_name + " " + user.first_name + "\n");
+                ImageView userpic = (ImageView) findViewById(R.id.profile_image);
+                //TODO ADD PIC USER !
+                userpic.setImageResource(R.drawable.pika);
             }
 
             @Override
@@ -134,8 +137,9 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
     }
 
     protected void setImageProfileClickListener(final String login) {
-        if (login.length() == 0)
-            return;
+         //TODO VERIF !!
+        //if (login.length() == 0)
+         //   return;
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,10 +150,9 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
     }
 
     private void startProfileActivity(String login) {
-        // TODO : ProfileActivity
-        // Intent intent = new Intent(this, ProfileActivity.class);
-        // intent.putExtra("profileLogin", login);
-        // startActivity(intent);
+         Intent intent = new Intent(this, ProfilActivity.class);
+         intent.putExtra("profileLogin", login);
+         startActivity(intent);
     }
 
     protected void updateUserPhoto() {
