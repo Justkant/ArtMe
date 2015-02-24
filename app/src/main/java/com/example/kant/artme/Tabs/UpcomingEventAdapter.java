@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.kant.artme.ArtmeAPI.Event;
 import com.example.kant.artme.R;
 
 import java.util.List;

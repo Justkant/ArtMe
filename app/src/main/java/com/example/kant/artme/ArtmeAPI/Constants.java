@@ -5,4 +5,5 @@ package com.example.kant.artme.ArtmeAPI;
  */
 public class Constants {
     public static final String USER = "/users/1";
+    public static final String LOGIN = "/login";
 }

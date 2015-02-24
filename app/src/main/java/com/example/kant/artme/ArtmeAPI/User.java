@@ -1,7 +1,6 @@
 package com.example.kant.artme.ArtmeAPI;
 
-import com.example.kant.artme.Tabs.Event;
-import com.example.kant.artme.Tabs.Group;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,9 +12,11 @@ public class User implements Serializable{
     public int id;
     public String last_name;
     public String first_name;
+    @SerializedName("username")
     public String username;
     public String picture_url;
     public String email;
+    @SerializedName("password")
     public String password;
     public String description;
     public String creation_date;

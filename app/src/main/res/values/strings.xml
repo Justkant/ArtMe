@@ -84,5 +84,6 @@
     <string name="hour_event_post">Hour</string>
     <string name="location_event_post">Location</string>
     <string name="adress_event_post">Adress</string>
+    <string name="title_activity_connexion">Connexion</string>
 
 </resources>

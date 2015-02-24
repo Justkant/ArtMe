@@ -1,6 +1,4 @@
-package com.example.kant.artme.Tabs;
-
-import com.example.kant.artme.ArtmeAPI.User;
+package com.example.kant.artme.ArtmeAPI;
 
 import java.io.Serializable;
 import java.util.List;

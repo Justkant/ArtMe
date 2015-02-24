@@ -69,6 +69,15 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+
+        if (savedInstanceState == null) {
+            if (MySharedPreferences.readToPreferences(this, getString(R.string.token_string), "").length() == 0) {
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+                return;
+            }
+        }
+
         mHandler = new Handler();
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
@@ -307,5 +316,14 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         setupDrawer();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (MySharedPreferences.readToPreferences(this, getString(R.string.token_string), "").length() == 0) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
     }
 }

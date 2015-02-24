@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.kant.artme.ArtmeAPI.Event;
 import com.example.kant.artme.BaseActivity;
 import com.example.kant.artme.R;
 
