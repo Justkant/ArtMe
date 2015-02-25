@@ -1,4 +1,4 @@
-package com.example.kant.artme;
+package com.example.kant.artme.Activities;
 
 
 import android.content.Context;
@@ -25,16 +25,17 @@ import com.example.kant.artme.ArtmeAPI.ArtmeAPI;
 import com.example.kant.artme.ArtmeAPI.User;
 import com.example.kant.artme.Drawer.DrawerAdapter;
 import com.example.kant.artme.Drawer.DrawerRawInfo;
-import com.example.kant.artme.Tabs.ManageEventFragment;
-import com.example.kant.artme.Tabs.PostFragment;
-import com.example.kant.artme.Tabs.RecyclerViewScrollListener;
-import com.example.kant.artme.Tabs.ResearchFragment;
-import com.example.kant.artme.Tabs.UpcomingEventFragment;
+import com.example.kant.artme.MyApplication;
+import com.example.kant.artme.MyImageLoader;
+import com.example.kant.artme.MySharedPreferences;
+import com.example.kant.artme.R;
+import com.example.kant.artme.RecyclerViewScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -63,6 +64,7 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
     private int currentFragmentId = -1;
     private RestAdapter restAdapter;
     private ArtmeAPI api;
+    public User currentUser = null;
 
 
     @Override
@@ -70,6 +72,7 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
 
+        //CHECK SI TOKEN NON NULL
         if (savedInstanceState == null) {
             if (MySharedPreferences.readToPreferences(this, getString(R.string.token_string), "").length() == 0) {
                 startActivity(new Intent(this, LoginActivity.class));
@@ -78,6 +81,7 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
             }
         }
 
+        //ACTION BAR + MEMORY CACHE
         mHandler = new Handler();
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
@@ -86,29 +90,29 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
         mMemoryCache = ((MyApplication) getApplication()).mMemoryCache;
 
         //API
-        restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getString(R.string.base_url))
-                .build();
-        api = restAdapter.create(ArtmeAPI.class);
-        Log.d("TEST ===>", "BITE");
-        api.userGet(new Callback<User>() {
-            @Override
-            public void success(User user, Response response) {
-                Log.d("TEST ===>", user.last_name + user.first_name);
+        if (MySharedPreferences.readToPreferences(this, getString(R.string.token_string), "") != "") {
+            restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(getString(R.string.base_url))
+                    .build();
+            api = restAdapter.create(ArtmeAPI.class);
+            api.userMe(MySharedPreferences.readToPreferences(this, getString(R.string.token_string), ""), new Callback<User>() {
+                @Override
+                public void success(User user, Response response) {
+                    if (mMemoryCache.get("userPicture") == null && user.picture_url != null) {
+                        new MyImageLoader(mMemoryCache, (ImageView) findViewById(R.id.profile_image))
+                                .execute(getString(R.string.base_url) + "/" + user.picture_url);
+                    }
+                    currentUser = user;
+                    updateUserInfos();
+                }
 
-                TextView usernametext = (TextView) findViewById(R.id.usernameText);
-                usernametext.setText(user.last_name + " " + user.first_name + "\n");
-                ImageView userpic = (ImageView) findViewById(R.id.profile_image);
-                //TODO ADD PIC USER !
-                userpic.setImageResource(R.drawable.pika);
-            }
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    Log.d("FAIL", retrofitError.getMessage());
+                }
+            });
 
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                Log.d("FAIL", retrofitError.getMessage());
-            }
-        });
-
+        }
     }
 
     protected void setupDrawer() {
@@ -146,9 +150,9 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
     }
 
     protected void setImageProfileClickListener(final String login) {
-         //TODO VERIF !!
+        //TODO VERIF !!
         //if (login.length() == 0)
-         //   return;
+        //   return;
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,9 +163,9 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
     }
 
     private void startProfileActivity(String login) {
-         Intent intent = new Intent(this, ProfilActivity.class);
-         intent.putExtra("profileLogin", login);
-         startActivity(intent);
+        Intent intent = new Intent(this, ProfilActivity.class);
+        intent.putExtra("user", currentUser);
+        startActivity(intent);
     }
 
     protected void updateUserPhoto() {
@@ -172,10 +176,9 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
     }
 
     protected void updateUserInfos() {
-        if (MySharedPreferences.readToPreferences(this, "hasUserInfos", "").equals("y")) {
+        if (currentUser != null) {
             TextView usernametext = (TextView) findViewById(R.id.usernameText);
-            usernametext.setText(MySharedPreferences.readToPreferences(this, "userName",
-                    getString(R.string.username_textview)));
+            usernametext.setText(currentUser.username + "\n");
 
         }
     }

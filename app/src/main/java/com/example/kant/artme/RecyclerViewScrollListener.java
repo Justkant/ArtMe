@@ -1,4 +1,4 @@
-package com.example.kant.artme.Tabs;
+package com.example.kant.artme;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;

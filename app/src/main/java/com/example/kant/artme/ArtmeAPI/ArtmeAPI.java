@@ -3,16 +3,24 @@ package com.example.kant.artme.ArtmeAPI;
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.Header;
 import retrofit.http.POST;
+import retrofit.http.Path;
 
 /**
  * Created by Shaft on 22/02/2015.
  */
 public interface ArtmeAPI {
 
-    @GET(Constants.USER)
-    public void userGet(Callback<User> callback);
+    @GET(Constants.ME)
+    public void userMe(@Header("TOKEN") String token, Callback<User> callback);
 
     @POST(Constants.LOGIN)
     void login(@Body User log, Callback<String> cb);
+
+    @POST(Constants.USERS)
+    void postUser(@Body User log, Callback<String> cb);
+
+    @POST("/users/{id}/event")
+    void postEvent(@Path("id") int id, @Header("TOKEN") String token, @Body Event event, Callback<Event> cb);
 }

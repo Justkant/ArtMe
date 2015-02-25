@@ -85,5 +85,15 @@
     <string name="location_event_post">Location</string>
     <string name="adress_event_post">Adress</string>
     <string name="title_activity_connexion">Connexion</string>
+    <string name="create_username">Username</string>
+    <string name="create_first_name">First Name</string>
+    <string name="create_last_name">Last Name</string>
+    <string name="create_email">E-Mail</string>
+    <string name="create_desc">Description</string>
+    <string name="create_pass">Password</string>
+    <string name="create__conf_pass">Confirm Password</string>
+    <string name="create_button">New User</string>
+    <string name="send_new_user">Create</string>
+    <string name="send_event">Send</string>
 
 </resources>

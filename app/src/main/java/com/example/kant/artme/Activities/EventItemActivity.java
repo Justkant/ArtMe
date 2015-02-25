@@ -1,4 +1,4 @@
-package com.example.kant.artme;
+package com.example.kant.artme.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +12,7 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.example.kant.artme.R;
 
 import java.util.HashMap;
 

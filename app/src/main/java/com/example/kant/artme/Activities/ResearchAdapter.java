@@ -1,10 +1,11 @@
-package com.example.kant.artme.Tabs;
+package com.example.kant.artme.Activities;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kant.artme.ArtmeAPI.Event;
@@ -15,14 +16,14 @@ import java.util.List;
 /**
  * Created by Shaft on 16/02/2015.
  */
-public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.MyViewHolder>{
+public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.MyViewHolder>{
     private List<Event> events;
     private LayoutInflater inflater;
     private ClickListener clickListener;
 
-    public ManageEventAdapter(Context context, List<Event> projects) {
+    public ResearchAdapter(Context context, List<Event> events) {
         inflater = LayoutInflater.from(context);
-        this.events = projects;
+        this.events = events;
     }
 
     @Override
@@ -34,6 +35,9 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
     @Override
     public void onBindViewHolder(MyViewHolder myViewHolder, int i) {
         myViewHolder.title.setText(events.get(i).title);
+        myViewHolder.date.setText(events.get(i).date);
+        myViewHolder.location.setText(events.get(i).adress);
+        myViewHolder.title_pic.setImageResource(R.drawable.pika);
     }
 
     @Override
@@ -51,11 +55,17 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView title;
+        TextView date;
+        TextView location;
+        ImageView title_pic;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             title = (TextView) itemView.findViewById(R.id.event_title);
+            date = (TextView) itemView.findViewById(R.id.date);
+            location = (TextView) itemView.findViewById(R.id.location);
+            title_pic = ((ImageView) itemView.findViewById(R.id.title_pic));
         }
 
         @Override

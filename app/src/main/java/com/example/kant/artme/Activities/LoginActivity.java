@@ -1,4 +1,4 @@
-package com.example.kant.artme;
+package com.example.kant.artme.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.widget.EditText;
 
 import com.example.kant.artme.ArtmeAPI.ArtmeAPI;
 import com.example.kant.artme.ArtmeAPI.User;
+import com.example.kant.artme.MySharedPreferences;
+import com.example.kant.artme.R;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -113,11 +115,20 @@ public class LoginActivity extends ActionBarActivity {
 
                     @Override
                     public void failure(RetrofitError retrofitError) {
-                        Log.d("FAIL", retrofitError.getMessage());
+//                        Log.d("FAIL", retrofitError.getMessage());
                         mPassword.setText("");
                         mPassword.setError(getString(R.string.login_error));
                     }
                 });
+            }
+        });
+
+        //CREATE
+        ((Button) findViewById(R.id.create_user)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CreateUserActivity.class);
+                startActivity(intent);
             }
         });
     }

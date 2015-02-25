@@ -1,4 +1,4 @@
-package com.example.kant.artme.Tabs;
+package com.example.kant.artme.Activities;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -15,12 +15,12 @@ import java.util.List;
 /**
  * Created by Shaft on 16/02/2015.
  */
-public class UpcomingEventAdapter  extends RecyclerView.Adapter<UpcomingEventAdapter.MyViewHolder>{
+public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.MyViewHolder>{
     private List<Event> events;
     private LayoutInflater inflater;
     private ClickListener clickListener;
 
-    public UpcomingEventAdapter(Context context, List<Event> projects) {
+    public ManageEventAdapter(Context context, List<Event> projects) {
         inflater = LayoutInflater.from(context);
         this.events = projects;
     }

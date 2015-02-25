@@ -1,4 +1,4 @@
-package com.example.kant.artme;
+package com.example.kant.artme.Activities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,10 @@ import android.widget.TextView;
 import com.example.kant.artme.ArtmeAPI.ArtmeAPI;
 import com.example.kant.artme.ArtmeAPI.Group;
 import com.example.kant.artme.ArtmeAPI.User;
+import com.example.kant.artme.MyApplication;
+import com.example.kant.artme.MyImageLoader;
+import com.example.kant.artme.MySharedPreferences;
+import com.example.kant.artme.R;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -32,17 +37,22 @@ import retrofit.client.Response;
  */
 public class ProfilActivity extends ActionBarActivity {
 
+    private User currentUser;
     private RestAdapter restAdapter;
     private ArtmeAPI api;
     private Toolbar toolbar;
     private List<Group> adapterData = new ArrayList<>();
     public Bitmap btm;
+    protected LruCache<String, Bitmap> mMemoryCache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
 
+        mMemoryCache = ((MyApplication) getApplication()).mMemoryCache;
+
+        currentUser = (User) getIntent().getSerializableExtra("user");
         toolbar = (Toolbar) findViewById(R.id.actionBarToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -54,7 +64,7 @@ public class ProfilActivity extends ActionBarActivity {
             }
         });
 
-
+        //GROUP
         LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.groups);
         for (int i = 0; i < 3; ++i) {
             LinearLayout newLinear = (LinearLayout) View.inflate(this, R.layout.group_row, null);
@@ -63,64 +73,19 @@ public class ProfilActivity extends ActionBarActivity {
             mLinearLayout.addView(newLinear);
         }
 
-        //API
-        restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getString(R.string.base_url))
-                .build();
-        api = restAdapter.create(ArtmeAPI.class);
-        api.userGet(new Callback<User>() {
-            @Override
-            public void success(User user, Response response) {
-                //USER NAME
-                TextView usernametext = (TextView) findViewById(R.id.username);
-                usernametext.setText(user.username + "\n");
-                //USER PIC
-                ImageView userpic = (ImageView) findViewById(R.id.profile_pic);
-                new DownloadPicsTask(userpic).execute(user);
-                //USER DESC
-                TextView desc = (TextView) findViewById(R.id.desc);
-                desc.setText(user.description);
+        //USER NAME
+        TextView usernametext = (TextView) findViewById(R.id.username);
+        usernametext.setText(currentUser.username + "\n");
+        //USER PIC
+        ImageView userpic = (ImageView) findViewById(R.id.profile_pic);
+        if (mMemoryCache.get("userPicture") != null)
+            userpic.setImageBitmap(mMemoryCache.get("userPicture"));
+        else
+            userpic.setImageResource(R.drawable.profile);
+        //USER DESC
+        TextView desc = (TextView) findViewById(R.id.desc);
+        desc.setText(currentUser.description);
 
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                Log.d("FAIL", retrofitError.getMessage());
-            }
-        });
-        //FIN API
-
-    }
-
-    //ASYNC
-    private class DownloadPicsTask extends AsyncTask<User, Integer, Bitmap> {
-
-        ImageView img;
-
-        public DownloadPicsTask(ImageView userpic) {
-            img = userpic;
-        }
-
-        @Override
-        protected Bitmap doInBackground(User... user) {
-            Bitmap bitmap = null;
-            try {
-                URL networkUrl = new URL(user[0].picture_url);
-                bitmap = BitmapFactory.decodeStream(
-                        networkUrl.openConnection().getInputStream());
-                return bitmap;
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return bitmap;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            img.setImageBitmap(result);
-        }
     }
 
 }

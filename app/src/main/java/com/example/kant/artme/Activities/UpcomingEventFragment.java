@@ -1,4 +1,4 @@
-package com.example.kant.artme.Tabs;
+package com.example.kant.artme.Activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.kant.artme.ArtmeAPI.Event;
-import com.example.kant.artme.BaseActivity;
 import com.example.kant.artme.R;
 
 import java.util.ArrayList;
@@ -18,23 +17,23 @@ import java.util.List;
 /**
  * Created by Shaft on 16/02/2015.
  */
-public class ManageEventFragment extends Fragment implements ManageEventAdapter.ClickListener {
+public class UpcomingEventFragment extends Fragment implements UpcomingEventAdapter.ClickListener {
 
     private List<Event> adapterData = new ArrayList<>();
-    private ManageEventAdapter mManageEventAdapter;
+    private UpcomingEventAdapter mUpcomingEventAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_board, container, false);
 
-        ((BaseActivity) getActivity()).getActionBarToolbar().setTitle(R.string.title_activity_manage_event);
+        ((BaseActivity) getActivity()).getActionBarToolbar().setTitle(R.string.title_activity_upcoming_event);
         ((BaseActivity) getActivity()).setSupportActionBar(((BaseActivity) getActivity()).getActionBarToolbar());
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.board_recycler);
-        mManageEventAdapter = new ManageEventAdapter(getActivity(), adapterData);
-        mManageEventAdapter.setClickListener(this);
+        mUpcomingEventAdapter = new UpcomingEventAdapter(getActivity(), adapterData);
+        mUpcomingEventAdapter.setClickListener(this);
 
-        mRecyclerView.setAdapter(mManageEventAdapter);
+        mRecyclerView.setAdapter(mUpcomingEventAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setOnScrollListener(((BaseActivity) getActivity()).getRecyclerScrollListener());
 
@@ -44,7 +43,7 @@ public class ManageEventFragment extends Fragment implements ManageEventAdapter.
         event2.title = "test2";
         adapterData.add(event1);
         adapterData.add(event2);
-        mManageEventAdapter.notifyDataSetChanged();
+        mUpcomingEventAdapter.notifyDataSetChanged();
         return view;
     }
 

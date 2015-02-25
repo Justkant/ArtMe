@@ -1,4 +1,4 @@
-package com.example.kant.artme.Tabs;
+package com.example.kant.artme.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,26 +8,43 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
-import com.example.kant.artme.BaseActivity;
+import com.example.kant.artme.ArtmeAPI.ArtmeAPI;
+import com.example.kant.artme.ArtmeAPI.Event;
+import com.example.kant.artme.ArtmeAPI.User;
+import com.example.kant.artme.MySharedPreferences;
 import com.example.kant.artme.R;
 
 import java.io.File;
 import java.util.HashMap;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 /**
  * Created by Shaft on 16/02/2015.
  */
 public class PostFragment extends Fragment implements BaseSliderView.OnSliderClickListener {
+
+    private RestAdapter restAdapter;
+    private ArtmeAPI api;
+    private EditText mTitle;
+    private EditText mDate;
+    private Event postEvent = new Event();
 
     private static final int RESULT_LOAD_IMAGE_B = 2;
     private static int RESULT_LOAD_IMAGE = 1;
@@ -44,6 +61,9 @@ public class PostFragment extends Fragment implements BaseSliderView.OnSliderCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.post_fragment, container, false);
         v = view;
+
+        mTitle = (EditText) v.findViewById(R.id.title);
+        mDate = (EditText) v.findViewById(R.id.date);
 
         ((BaseActivity) getActivity()).getActionBarToolbar().setTitle(R.string.title_activity_post);
         ((BaseActivity) getActivity()).setSupportActionBar(((BaseActivity) getActivity()).getActionBarToolbar());
@@ -75,6 +95,34 @@ public class PostFragment extends Fragment implements BaseSliderView.OnSliderCli
             }
         });
 
+
+        //API POST EVENT
+        ((Button) view.findViewById(R.id.send)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                postEvent.title = mTitle.getText().toString();
+                postEvent.date = mDate.getText().toString();
+
+                //API
+                restAdapter = new RestAdapter.Builder()
+                        .setEndpoint(getString(R.string.base_url))
+                        .build();
+                api = restAdapter.create(ArtmeAPI.class);
+                api.postEvent(((BaseActivity) getActivity()).currentUser.id ,MySharedPreferences.readToPreferences(getActivity(), getString(R.string.token_string), ""), postEvent, new Callback<Event>() {
+                    @Override
+                    public void success(Event event, Response response) {
+                        Toast.makeText(getActivity(), "EVENT POST", Toast.LENGTH_SHORT);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        Log.d("FAIL", retrofitError.getMessage());
+                    }
+                });
+
+            }
+        });
 
         return view;
     }
