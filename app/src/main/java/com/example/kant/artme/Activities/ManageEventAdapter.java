@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import com.example.kant.artme.R;
 
 import com.example.kant.artme.ArtmeAPI.Event;
-import com.example.kant.artme.R;
+import com.example.kant.artme.MyGeneralImageLoader;
 
 import java.util.List;
 
@@ -34,6 +36,11 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
     @Override
     public void onBindViewHolder(MyViewHolder myViewHolder, int i) {
         myViewHolder.title.setText(events.get(i).title);
+       // Log.d("title_pic ===> ",  events.get(i).picture_url);
+        if (events.get(i).picture_url != null)
+            new MyGeneralImageLoader(myViewHolder.title_pic).execute("http://192.168.0.10/artme-api" + "/" + events.get(i).picture_url);
+        else
+            myViewHolder.title_pic.setImageResource(R.drawable.df);
     }
 
     @Override
@@ -46,22 +53,24 @@ public class ManageEventAdapter extends RecyclerView.Adapter<ManageEventAdapter.
     }
 
     public interface ClickListener {
-        public void itemClicked(int position);
+        public void manageItemClicked(int position);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView title;
+        ImageView title_pic;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             title = (TextView) itemView.findViewById(R.id.event_title);
+            title_pic = ((ImageView) itemView.findViewById(R.id.title_pic));
         }
 
         @Override
         public void onClick(View v) {
             if (clickListener != null) {
-                clickListener.itemClicked(getPosition());
+                clickListener.manageItemClicked(getPosition());
             }
         }
     }

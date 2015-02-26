@@ -65,7 +65,7 @@ public class ResearchActivity extends BaseActivity implements ResearchAdapter.Cl
 
 
     @Override
-    public void itemClicked(int position) {
+    public void reserchItemClicked(int position) {
         Log.d("itemclick ===>", "ResearchActivity");
         Intent intent = new Intent(this,EventItemActivity.class);
         intent.putExtra("item", adapterData.get(position));

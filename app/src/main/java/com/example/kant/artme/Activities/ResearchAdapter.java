@@ -50,7 +50,7 @@ public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.MyView
     }
 
     public interface ClickListener {
-        public void itemClicked(int position);
+        public void reserchItemClicked(int position);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -71,7 +71,7 @@ public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.MyView
         @Override
         public void onClick(View v) {
             if (clickListener != null) {
-                clickListener.itemClicked(getPosition());
+                clickListener.reserchItemClicked(getPosition());
             }
         }
     }

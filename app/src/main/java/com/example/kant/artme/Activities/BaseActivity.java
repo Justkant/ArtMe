@@ -102,12 +102,13 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
                                 .execute(getString(R.string.base_url) + "/" + user.picture_url);
                     }
                     currentUser = user;
+                    Log.d("SAVE CURRENTUSER ===>", "OK " + currentUser.username);
                     updateUserInfos();
                 }
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
-                    Log.d("FAIL BASE API ", retrofitError.getMessage());
+                    Log.d("BASE RETROFIT ERROR ===>", retrofitError.getMessage());
                 }
             });
 
@@ -244,7 +245,6 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
 
     @Override
     public void itemClicked(final int position) {
-        Log.d("itemclick ===>", "BaseActivity");
         if (position == getSelfNavDrawerItem()) {
             mDrawerLayout.closeDrawer(Gravity.START);
             return;
@@ -269,11 +269,11 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
 
     protected void goToNavDrawerItem(int position, final int tabId) {
         Intent intent;
-
+/*
         if (currentFragment != null)
             getSupportFragmentManager().beginTransaction()
                     .remove(currentFragment)
-                    .commit();
+                    .commit();*/
 
         switch (position) {
             case RESEARCH_ID:
@@ -285,8 +285,11 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
                 finish();
                 break;
             case MANAGE_ID:
+                Intent intent2 = new Intent(this, ManageEventActivity.class);
+                intent2.putExtra("user", currentUser);
+                intent2.putExtra("typeEvent", 1);
+                startActivity(intent2);
                 finish();
-                startActivity(new Intent(this, ManageEventActivity.class));
                 break;
             case UPCOMING_ID:
                 finish();

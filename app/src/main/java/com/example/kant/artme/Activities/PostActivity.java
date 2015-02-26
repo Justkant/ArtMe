@@ -99,6 +99,7 @@ public class PostActivity extends BaseActivity implements BaseSliderView.OnSlide
 
                 postEvent.title = mTitle.getText().toString();
                 postEvent.date = mDate.getText().toString();
+                Log.d("DATE ===> ", "[" + mDate.getText().toString() + "]");
 
                 //API
                 restAdapter = new RestAdapter.Builder()
