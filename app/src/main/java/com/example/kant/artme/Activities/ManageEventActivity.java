@@ -17,25 +17,26 @@ import java.util.List;
 /**
  * Created by Shaft on 16/02/2015.
  */
-public class ManageEventFragment extends Fragment implements ManageEventAdapter.ClickListener {
+public class ManageEventActivity extends BaseActivity implements ManageEventAdapter.ClickListener {
 
     private List<Event> adapterData = new ArrayList<>();
     private ManageEventAdapter mManageEventAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_board, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.list_board);
 
-        ((BaseActivity) getActivity()).getActionBarToolbar().setTitle(R.string.title_activity_manage_event);
-        ((BaseActivity) getActivity()).setSupportActionBar(((BaseActivity) getActivity()).getActionBarToolbar());
+        getActionBarToolbar().setTitle(R.string.title_activity_manage_event);
+        setSupportActionBar(getActionBarToolbar());
 
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.board_recycler);
-        mManageEventAdapter = new ManageEventAdapter(getActivity(), adapterData);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.board_recycler);
+        mManageEventAdapter = new ManageEventAdapter(this, adapterData);
         mManageEventAdapter.setClickListener(this);
 
         mRecyclerView.setAdapter(mManageEventAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setOnScrollListener(((BaseActivity) getActivity()).getRecyclerScrollListener());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setOnScrollListener(getRecyclerScrollListener());
 
         Event event1 = new Event();
         event1.title = "test1";
@@ -44,7 +45,6 @@ public class ManageEventFragment extends Fragment implements ManageEventAdapter.
         adapterData.add(event1);
         adapterData.add(event2);
         mManageEventAdapter.notifyDataSetChanged();
-        return view;
     }
 
     @Override
@@ -54,5 +54,9 @@ public class ManageEventFragment extends Fragment implements ManageEventAdapter.
 /*        Intent intent = new Intent(getActivity(), ProjectItemActivity.class);
         intent.putExtra("item", adapterData.get(position));
         startActivity(intent);*/
+    }
+
+    protected int getSelfNavDrawerItem() {
+        return MANAGE_ID;
     }
 }

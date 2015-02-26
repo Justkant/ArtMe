@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.BaseActivity">
+        <activity android:name=".Activities.ResearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -20,6 +20,11 @@
         <activity android:name=".Activities.ProfilActivity"/>
         <activity android:name=".Activities.LoginActivity"/>
         <activity android:name=".Activities.CreateUserActivity"/>
+        <activity android:name=".Activities.BaseActivity"/>
+        <activity android:name=".Activities.PostActivity"/>
+        <activity android:name=".Activities.ManageEventActivity"/>
+        <activity android:name=".Activities.UpcomingEventActivity"/>
+
 
     </application>
 

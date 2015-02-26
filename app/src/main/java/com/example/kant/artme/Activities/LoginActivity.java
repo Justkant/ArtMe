@@ -109,7 +109,7 @@ public class LoginActivity extends ActionBarActivity {
                     @Override
                     public void success(String token, Response response) {
                         MySharedPreferences.saveToPreferences(getBaseContext(), getString(R.string.token_string), token);
-                        startActivity(new Intent(getBaseContext(), BaseActivity.class));
+                        startActivity(new Intent(getBaseContext(), ResearchActivity.class));
                         finish();
                     }
 

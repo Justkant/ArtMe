@@ -70,7 +70,6 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
 
         //CHECK SI TOKEN NON NULL
         if (savedInstanceState == null) {
@@ -108,7 +107,7 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
-                    Log.d("FAIL", retrofitError.getMessage());
+                    Log.d("FAIL BASE API ", retrofitError.getMessage());
                 }
             });
 
@@ -176,10 +175,9 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
     }
 
     protected void updateUserInfos() {
-        if (currentUser != null) {
-            TextView usernametext = (TextView) findViewById(R.id.usernameText);
+        TextView usernametext = (TextView) findViewById(R.id.usernameText);
+        if (currentUser != null && usernametext != null) {
             usernametext.setText(currentUser.username + "\n");
-
         }
     }
 
@@ -246,15 +244,14 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
 
     @Override
     public void itemClicked(final int position) {
-        if (position == currentFragmentId) {
+        Log.d("itemclick ===>", "BaseActivity");
+        if (position == getSelfNavDrawerItem()) {
             mDrawerLayout.closeDrawer(Gravity.START);
             return;
         }
-
         if (isSpecialItem(position)) {
             goToNavDrawerItem(position, 0);
         } else {
-            currentFragmentId = position;
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -263,7 +260,6 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
             }, 250);
             setSelectedNavDrawerItem(position);
         }
-
         mDrawerLayout.closeDrawer(Gravity.START);
     }
 
@@ -281,28 +277,20 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
 
         switch (position) {
             case RESEARCH_ID:
-                currentFragment = new ResearchFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, currentFragment)
-                        .commit();
+                startActivity(new Intent(this, ResearchActivity.class));
+                finish();
                 break;
             case POST_ID:
-                currentFragment = new PostFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, currentFragment)
-                        .commit();
+                startActivity(new Intent(this,PostActivity.class));
+                finish();
                 break;
             case MANAGE_ID:
-                currentFragment = new ManageEventFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, currentFragment)
-                        .commit();
+                finish();
+                startActivity(new Intent(this, ManageEventActivity.class));
                 break;
             case UPCOMING_ID:
-                currentFragment = new UpcomingEventFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, currentFragment)
-                        .commit();
+                finish();
+                startActivity(new Intent(this, UpcomingEventActivity.class));
                 break;
             case SETTINGS_ID:
                 intent = new Intent(this, SettingsActivity.class);
@@ -328,5 +316,9 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
+    }
+
+    protected int getSelfNavDrawerItem() {
+        return 0;
     }
 }
