@@ -94,7 +94,6 @@ public class ProfilActivity extends ActionBarActivity {
                 Intent intent2 = new Intent(getApplicationContext(), ManageEventActivity.class);
                 intent2.putExtra("user", currentUser);
                 intent2.putExtra("typeEvent", 2);
-                Log.d("PASS EVEnT SEND ===>", String.valueOf(currentUser.past_events.size()));
                 startActivity(intent2);
                 finish();
             }

@@ -48,8 +48,6 @@ public class ManageEventActivity extends BaseActivity implements ManageEventAdap
         //RECUP PARAMS + SET DES BONNES CARD -PASS -NEXT
         paramUser = (User) getIntent().getSerializableExtra("user");
         typeEvent = (int) getIntent().getSerializableExtra("typeEvent");
-        Log.d("TAILLE NEXT EVENTS", String.valueOf(paramUser.next_events.size()));
-        Log.d("NAME NEXT EVENTS", String.valueOf(paramUser.next_events.get(0).title));
         if (typeEvent == NEXT_EVENT)
         for (int i = 0; i < paramUser.next_events.size(); ++i) {
             Event nEvent = paramUser.next_events.get(i);
@@ -65,11 +63,17 @@ public class ManageEventActivity extends BaseActivity implements ManageEventAdap
 
     @Override
     public void manageItemClicked(int position) {
-
         //TODO INTENT ITEMEVENT
-        Intent intent = new Intent(this, ManageItemActivity.class);
-        intent.putExtra("item", adapterData.get(position));
-        startActivity(intent);
+        if (typeEvent == NEXT_EVENT) {
+            Intent intent = new Intent(this, ManageItemActivity.class);
+            intent.putExtra("item", adapterData.get(position));
+            startActivity(intent);
+        }
+        else if (typeEvent == PASS_EVENT) {
+            Intent intent = new Intent(this, EventItemActivity.class);
+            intent.putExtra("item", adapterData.get(position));
+            startActivity(intent);
+        }
     }
 
     protected int getSelfNavDrawerItem() {

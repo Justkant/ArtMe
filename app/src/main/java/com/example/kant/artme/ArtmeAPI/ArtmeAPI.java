@@ -1,5 +1,7 @@
 package com.example.kant.artme.ArtmeAPI;
 
+import java.util.List;
+
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -14,6 +16,9 @@ public interface ArtmeAPI {
 
     @GET(Constants.ME)
     public void userMe(@Header("TOKEN") String token, Callback<User> callback);
+
+    @GET(Constants.EVENTS)
+    public void getEvents(Callback<List<Event>> callback);
 
     @POST(Constants.LOGIN)
     void login(@Body User log, Callback<String> cb);

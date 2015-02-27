@@ -6,20 +6,32 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.example.kant.artme.ArtmeAPI.ArtmeAPI;
 import com.example.kant.artme.ArtmeAPI.Event;
+import com.example.kant.artme.ArtmeAPI.User;
+import com.example.kant.artme.MyImageLoader;
+import com.example.kant.artme.MySharedPreferences;
 import com.example.kant.artme.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 /**
  * Created by Shaft on 13/02/2015.
  */
-public class ResearchActivity extends BaseActivity implements ResearchAdapter.ClickListener{
+public class ResearchActivity extends BaseActivity implements ResearchAdapter.ClickListener {
 
     private List<Event> adapterData = new ArrayList<>();
     private ResearchAdapter mResearchAdapter;
+    private RestAdapter restAdapter;
+    private ArtmeAPI api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +55,28 @@ public class ResearchActivity extends BaseActivity implements ResearchAdapter.Cl
             }
         });
 
-        Event event1 = new Event();
-        event1.title = "test1";
-        event1.description = "toto blabla";
-        event1.date = "01/01/1001";
-        event1.adress = "Dans ton Uc";
-        Event event2 = new Event();
-        event2.title = "test2";
-        event2.description = "toto blabla";
-        event2.date = "01/01/1001";
-        event2.adress = "Dans ton Uc";
-        adapterData.add(event1);
-        adapterData.add(event2);
-        mResearchAdapter.notifyDataSetChanged();
+        //API
+        if (MySharedPreferences.readToPreferences(this, getString(R.string.token_string), "") != "") {
+            restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(getString(R.string.base_url))
+                    .build();
+            api = restAdapter.create(ArtmeAPI.class);
+            api.getEvents(new Callback<List<Event>>() {
+                @Override
+                public void success(List<Event> events, Response response) {
+                    for (int i = 0; i < events.size() ; ++i) {
+                        adapterData.add(events.get(i));
+                    }
+                    mResearchAdapter.notifyDataSetChanged();
+                }
 
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    Log.d("RESEARCH RETROFIT ERROR ===>", retrofitError.getMessage());
+                }
+            });
+
+        }
     }
 
     protected int getSelfNavDrawerItem() {
@@ -66,8 +86,7 @@ public class ResearchActivity extends BaseActivity implements ResearchAdapter.Cl
 
     @Override
     public void reserchItemClicked(int position) {
-        Log.d("itemclick ===>", "ResearchActivity");
-        Intent intent = new Intent(this,EventItemActivity.class);
+        Intent intent = new Intent(this, EventItemActivity.class);
         intent.putExtra("item", adapterData.get(position));
         startActivity(intent);
     }

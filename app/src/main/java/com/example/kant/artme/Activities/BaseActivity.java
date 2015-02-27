@@ -102,7 +102,6 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
                                 .execute(getString(R.string.base_url) + "/" + user.picture_url);
                     }
                     currentUser = user;
-                    Log.d("SAVE CURRENTUSER ===>", "OK " + currentUser.username);
                     updateUserInfos();
                 }
 

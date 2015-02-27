@@ -12,7 +12,7 @@ public class MyGeneralImageLoader extends AsyncTask<String, Void, Bitmap> {
 
     ImageView toSet;
 
-    public MyGeneralImageLoader(ImageView ProfileImage) {
+    public  MyGeneralImageLoader(ImageView ProfileImage) {
         toSet = ProfileImage;
     }
 

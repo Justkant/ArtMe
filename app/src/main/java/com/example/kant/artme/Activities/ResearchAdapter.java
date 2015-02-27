@@ -9,13 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kant.artme.ArtmeAPI.Event;
+import com.example.kant.artme.MyGeneralImageLoader;
 import com.example.kant.artme.R;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Shaft on 16/02/2015.
  */
+
 public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.MyViewHolder>{
     private List<Event> events;
     private LayoutInflater inflater;
@@ -37,7 +40,18 @@ public class ResearchAdapter extends RecyclerView.Adapter<ResearchAdapter.MyView
         myViewHolder.title.setText(events.get(i).title);
         myViewHolder.date.setText(events.get(i).date);
         myViewHolder.location.setText(events.get(i).adress);
-        myViewHolder.title_pic.setImageResource(R.drawable.pika);
+
+        if (events.get(i).picture_url != null) {
+            try {
+                events.get(i).picture_btm =  new MyGeneralImageLoader(myViewHolder.title_pic).execute("http://192.168.0.10/artme-api" + "/" + events.get(i).picture_url).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        else
+            myViewHolder.title_pic.setImageResource(R.drawable.df);
     }
 
     @Override

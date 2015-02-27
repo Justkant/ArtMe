@@ -95,5 +95,6 @@
     <string name="create_button">New User</string>
     <string name="send_new_user">Create</string>
     <string name="send_event">Send</string>
+    <string name="title_event">Event</string>
 
 </resources>
