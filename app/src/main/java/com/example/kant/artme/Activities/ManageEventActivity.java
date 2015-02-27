@@ -28,13 +28,24 @@ public class ManageEventActivity extends BaseActivity implements ManageEventAdap
     private int typeEvent;
     private final static int NEXT_EVENT = 1;
     private final static int PASS_EVENT = 2;
+    private static final int SUB_EVENT = 3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_board);
 
-        getActionBarToolbar().setTitle(R.string.title_activity_manage_event);
+        //RECUP PARAMS + SET DES BONNES CARD -PASS -NEXT
+        paramUser = (User) getIntent().getSerializableExtra("user");
+        typeEvent = (int) getIntent().getSerializableExtra("typeEvent");
+
+        if (typeEvent == NEXT_EVENT)
+            getActionBarToolbar().setTitle(R.string.title_activity_manage_event);
+        else if (typeEvent == PASS_EVENT)
+            getActionBarToolbar().setTitle(R.string.title_activity_pass_event);
+        else if (typeEvent == SUB_EVENT)
+            getActionBarToolbar().setTitle(R.string.title_activity_sub_event);
         setSupportActionBar(getActionBarToolbar());
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.board_recycler);
@@ -45,19 +56,23 @@ public class ManageEventActivity extends BaseActivity implements ManageEventAdap
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setOnScrollListener(getRecyclerScrollListener());
 
-        //RECUP PARAMS + SET DES BONNES CARD -PASS -NEXT
-        paramUser = (User) getIntent().getSerializableExtra("user");
-        typeEvent = (int) getIntent().getSerializableExtra("typeEvent");
+        //SET RIGHT CARDS
         if (typeEvent == NEXT_EVENT)
-        for (int i = 0; i < paramUser.next_events.size(); ++i) {
-            Event nEvent = paramUser.next_events.get(i);
-            adapterData.add(nEvent);
-        }
+            for (int i = 0; i < paramUser.next_events.size(); ++i) {
+                Event nEvent = paramUser.next_events.get(i);
+                adapterData.add(nEvent);
+            }
         else if (typeEvent == PASS_EVENT)
             for (int i = 0; i < paramUser.past_events.size(); ++i) {
                 Event nEvent = paramUser.past_events.get(i);
                 adapterData.add(nEvent);
             }
+        else if (typeEvent == SUB_EVENT)
+            if (paramUser.sub_events != null)
+                for (int i = 0; i < paramUser.sub_events.size(); ++i) {
+                    Event nEvent = paramUser.sub_events.get(i);
+                    adapterData.add(nEvent);
+                }
         mManageEventAdapter.notifyDataSetChanged();
     }
 
@@ -68,8 +83,11 @@ public class ManageEventActivity extends BaseActivity implements ManageEventAdap
             Intent intent = new Intent(this, ManageItemActivity.class);
             intent.putExtra("item", adapterData.get(position));
             startActivity(intent);
-        }
-        else if (typeEvent == PASS_EVENT) {
+        } else if (typeEvent == PASS_EVENT) {
+            Intent intent = new Intent(this, EventItemActivity.class);
+            intent.putExtra("item", adapterData.get(position));
+            startActivity(intent);
+        } else if (typeEvent == SUB_EVENT) {
             Intent intent = new Intent(this, EventItemActivity.class);
             intent.putExtra("item", adapterData.get(position));
             startActivity(intent);

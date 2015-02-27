@@ -32,8 +32,16 @@ public class EventItemActivity extends BaseActivity implements BaseSliderView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_item);
 
-        getActionBarToolbar().setTitle(R.string.title_event);
         setSupportActionBar(getActionBarToolbar());
+        getActionBarToolbar().setTitle(R.string.title_event);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBarToolbar().setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
 /*
         toolbar = (Toolbar) findViewById(R.id.actionBarToolbar);
         setSupportActionBar(toolbar);

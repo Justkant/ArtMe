@@ -291,8 +291,11 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
                 finish();
                 break;
             case UPCOMING_ID:
+                Intent intent3 = new Intent(this, ManageEventActivity.class);
+                intent3.putExtra("user", currentUser);
+                intent3.putExtra("typeEvent", 3);
+                startActivity(intent3);
                 finish();
-                startActivity(new Intent(this, UpcomingEventActivity.class));
                 break;
             case SETTINGS_ID:
                 intent = new Intent(this, SettingsActivity.class);
