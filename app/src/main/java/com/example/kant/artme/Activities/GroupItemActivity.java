@@ -1,8 +1,6 @@
 package com.example.kant.artme.Activities;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +13,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.kant.artme.ArtmeAPI.ArtmeAPI;
 import com.example.kant.artme.ArtmeAPI.Event;
-import com.example.kant.artme.ArtmeAPI.User;
+import com.example.kant.artme.ArtmeAPI.Group;
 import com.example.kant.artme.MyGeneralImageLoader;
 import com.example.kant.artme.MySharedPreferences;
 import com.example.kant.artme.R;
@@ -29,24 +27,24 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
- * Created by Shaft on 17/02/2015.
+ * Created by Shaft on 27/02/2015.
  */
-public class EventItemActivity extends BaseActivity implements BaseSliderView.OnSliderClickListener {
+public class GroupItemActivity extends BaseActivity implements BaseSliderView.OnSliderClickListener {
 
     private RestAdapter restAdapter;
     private ArtmeAPI api;
     private SliderLayout mDemoSlider;
-    private Event event;
+    private Group group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_item);
+        setContentView(R.layout.activity_group_item);
 
-        event = (Event) getIntent().getSerializableExtra("item");
+        group = (Group) getIntent().getSerializableExtra("item");
 
         setSupportActionBar(getActionBarToolbar());
-        getActionBarToolbar().setTitle(event.title);
+        getActionBarToolbar().setTitle(group.title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBarToolbar().setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,15 +81,14 @@ public class EventItemActivity extends BaseActivity implements BaseSliderView.On
         mDemoSlider.setDuration(4000);
         // FIN SLIDER
 
-        ((TextView) findViewById(R.id.event_title)).setText(event.title);
-        ((TextView) findViewById(R.id.event_desc)).setText(event.description);
-        ((TextView) findViewById(R.id.date)).setText(event.date);
-        ((TextView) findViewById(R.id.location)).setText(event.adress);
-        ((TextView) findViewById(R.id.participant)).setText("1250 \n Participant");
-        if (event.picture_url != null)
+
+        ((TextView) findViewById(R.id.event_title)).setText(group.title);
+        ((TextView) findViewById(R.id.event_desc)).setText(group.description);
+        ((TextView) findViewById(R.id.location)).setText(group.adress);
+        if (group.picture_url != null)
             try {
                 new MyGeneralImageLoader((ImageView) findViewById(R.id.title_pic))
-                        .execute(getString(R.string.base_url) + "/" + event.picture_url)
+                        .execute(getString(R.string.base_url) + "/" + group.picture_url)
                         .get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -100,29 +97,6 @@ public class EventItemActivity extends BaseActivity implements BaseSliderView.On
             }
         else
             ((ImageView) findViewById(R.id.title_pic)).setImageResource(R.drawable.df);
-
-        ((TextView) findViewById(R.id.participate)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //API
-                restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(getString(R.string.base_url))
-                        .build();
-                api = restAdapter.create(ArtmeAPI.class);
-                api.subEvent(event.id, MySharedPreferences.readToPreferences(getApplicationContext(), getString(R.string.token_string), ""), new Callback<Event>() {
-                    @Override
-                    public void success(Event event, Response response) {
-                        Toast.makeText(EventItemActivity.this, "SUB OK", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void failure(RetrofitError retrofitError) {
-                        Log.d("FAIL", retrofitError.getMessage());
-                    }
-                });
-            }
-        });
-
     }
 
     @Override

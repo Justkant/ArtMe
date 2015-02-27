@@ -106,7 +106,7 @@ public class PostActivity extends BaseActivity implements BaseSliderView.OnSlide
                         .setEndpoint(getString(R.string.base_url))
                         .build();
                 api = restAdapter.create(ArtmeAPI.class);
-                api.postEvent(currentUser.id ,MySharedPreferences.readToPreferences(getApplicationContext(), getString(R.string.token_string), ""), postEvent, new Callback<Event>() {
+                api.postEvent(currentUser.id, MySharedPreferences.readToPreferences(getApplicationContext(), getString(R.string.token_string), ""), postEvent, new Callback<Event>() {
                     @Override
                     public void success(Event event, Response response) {
                         Toast.makeText(PostActivity.this, "EVENT POST", Toast.LENGTH_SHORT).show();
@@ -122,78 +122,6 @@ public class PostActivity extends BaseActivity implements BaseSliderView.OnSlide
         });
 
     }
-
-
-    /*
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.post_fragment, container, false);
-        v = view;
-
-        mTitle = (EditText) v.findViewById(R.id.title);
-        mDate = (EditText) v.findViewById(R.id.date);
-
-        ((BaseActivity) getActivity()).getActionBarToolbar().setTitle(R.string.title_activity_post);
-        ((BaseActivity) getActivity()).setSupportActionBar(((BaseActivity) getActivity()).getActionBarToolbar());
-
-        ((Button) view.findViewById(R.id.load)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
-            }
-        });
-
-
-        //test custom gallery
-        mDemoSlider = (SliderLayout) v.findViewById(R.id.slider);
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.setDuration(4000);
-        mDemoSlider.stopAutoCycle();
-        ((Button) view.findViewById(R.id.load_b)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nb_pic_loaded += 1;
-                if (nb_pic_loaded > 1)
-                    mDemoSlider.startAutoCycle();
-                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, RESULT_LOAD_IMAGE_B);
-            }
-        });
-
-
-        //API POST EVENT
-        ((Button) view.findViewById(R.id.send)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                postEvent.title = mTitle.getText().toString();
-                postEvent.date = mDate.getText().toString();
-
-                //API
-                restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(getString(R.string.base_url))
-                        .build();
-                api = restAdapter.create(ArtmeAPI.class);
-                api.postEvent(((BaseActivity) getActivity()).currentUser.id ,MySharedPreferences.readToPreferences(getActivity(), getString(R.string.token_string), ""), postEvent, new Callback<Event>() {
-                    @Override
-                    public void success(Event event, Response response) {
-                        Toast.makeText(getActivity(), "EVENT POST", Toast.LENGTH_SHORT);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError retrofitError) {
-                        Log.d("FAIL", retrofitError.getMessage());
-                    }
-                });
-
-            }
-        });
-
-        return view;
-    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

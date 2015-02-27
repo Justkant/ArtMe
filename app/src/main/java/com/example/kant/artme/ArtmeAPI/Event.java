@@ -8,7 +8,8 @@ import java.util.List;
 /**
  * Created by Shaft on 16/02/2015.
  */
-public class Event implements Serializable{
+public class Event implements Serializable {
+    public int id;
     public String title;
     public String description;
     public String date;

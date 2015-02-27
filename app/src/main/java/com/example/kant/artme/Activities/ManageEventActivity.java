@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.kant.artme.ArtmeAPI.Event;
+import com.example.kant.artme.ArtmeAPI.Group;
 import com.example.kant.artme.ArtmeAPI.User;
 import com.example.kant.artme.R;
 
@@ -29,7 +30,7 @@ public class ManageEventActivity extends BaseActivity implements ManageEventAdap
     private final static int NEXT_EVENT = 1;
     private final static int PASS_EVENT = 2;
     private static final int SUB_EVENT = 3;
-
+    private static final int LIST_GROUPS = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,23 +57,27 @@ public class ManageEventActivity extends BaseActivity implements ManageEventAdap
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setOnScrollListener(getRecyclerScrollListener());
 
+        Log.d("ITE", "ITE");
         //SET RIGHT CARDS
-        if (typeEvent == NEXT_EVENT)
-            for (int i = 0; i < paramUser.next_events.size(); ++i) {
-                Event nEvent = paramUser.next_events.get(i);
-                adapterData.add(nEvent);
-            }
-        else if (typeEvent == PASS_EVENT)
-            for (int i = 0; i < paramUser.past_events.size(); ++i) {
-                Event nEvent = paramUser.past_events.get(i);
-                adapterData.add(nEvent);
-            }
-        else if (typeEvent == SUB_EVENT)
+        if (typeEvent == NEXT_EVENT) {
+            if (paramUser.next_events != null)
+                for (int i = 0; i < paramUser.next_events.size(); ++i) {
+                    Event nEvent = paramUser.next_events.get(i);
+                    adapterData.add(nEvent);
+                }
+        } else if (typeEvent == PASS_EVENT) {
+            if (paramUser.past_events != null)
+                for (int i = 0; i < paramUser.past_events.size(); ++i) {
+                    Event nEvent = paramUser.past_events.get(i);
+                    adapterData.add(nEvent);
+                }
+        } else if (typeEvent == SUB_EVENT) {
             if (paramUser.sub_events != null)
                 for (int i = 0; i < paramUser.sub_events.size(); ++i) {
                     Event nEvent = paramUser.sub_events.get(i);
                     adapterData.add(nEvent);
                 }
+        }
         mManageEventAdapter.notifyDataSetChanged();
     }
 
@@ -95,6 +100,10 @@ public class ManageEventActivity extends BaseActivity implements ManageEventAdap
     }
 
     protected int getSelfNavDrawerItem() {
+        if (typeEvent == NEXT_EVENT)
+            return MANAGE_ID;
+        else if (typeEvent == SUB_EVENT)
+            return UPCOMING_ID;
         return MANAGE_ID;
     }
 }

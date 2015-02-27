@@ -28,4 +28,7 @@ public interface ArtmeAPI {
 
     @POST("/users/{id}/event")
     void postEvent(@Path("id") int id, @Header("TOKEN") String token, @Body Event event, Callback<Event> cb);
+
+    @POST("/events/{id}/user")
+    void subEvent(@Path("id") int id, @Header("TOKEN") String token, Callback<Event> cb);
 }

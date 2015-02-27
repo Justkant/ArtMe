@@ -107,7 +107,7 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
-                    Log.d("BASE RETROFIT ERROR ===>", retrofitError.getMessage());
+//                    Log.d("BASE RETROFIT ERROR ===>", retrofitError.getMessage());
                 }
             });
 

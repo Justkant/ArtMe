@@ -19,6 +19,7 @@ import com.example.kant.artme.ArtmeAPI.ArtmeAPI;
 import com.example.kant.artme.ArtmeAPI.Group;
 import com.example.kant.artme.ArtmeAPI.User;
 import com.example.kant.artme.MyApplication;
+import com.example.kant.artme.MyGeneralImageLoader;
 import com.example.kant.artme.MyImageLoader;
 import com.example.kant.artme.MySharedPreferences;
 import com.example.kant.artme.R;
@@ -28,6 +29,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -68,10 +70,23 @@ public class ProfilActivity extends ActionBarActivity {
 
         //GROUP
         LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.groups);
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < 3 && i < currentUser.groups.size(); ++i) {
             LinearLayout newLinear = (LinearLayout) View.inflate(this, R.layout.group_row, null);
-            ((ImageView) newLinear.findViewById(R.id.group_pic)).setImageResource(R.drawable.pika);
-            ((TextView) newLinear.findViewById(R.id.group_title)).setText("TEST");
+            if (currentUser.groups.get(i).picture_url != null) {
+                try {
+                    currentUser.groups.get(i).picture_btm = new MyGeneralImageLoader((ImageView) newLinear.findViewById(R.id.group_pic))
+                            .execute(getString(R.string.base_url) + "/" + currentUser.groups.get(i).picture_url)
+                            .get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            } else
+                ((ImageView) newLinear.findViewById(R.id.group_pic)).setImageResource(R.drawable.df);
+            //ERREUR LORS DE L ENVOIE DANS LES ACTIVITE BITMAP NOT PARCEBLE
+            currentUser.groups.get(i).picture_btm = null;
+            ((TextView) newLinear.findViewById(R.id.group_title)).setText(currentUser.groups.get(i).title);
             mLinearLayout.addView(newLinear);
         }
 
@@ -88,13 +103,46 @@ public class ProfilActivity extends ActionBarActivity {
         TextView desc = (TextView) findViewById(R.id.desc);
         desc.setText(currentUser.description);
 
+
+        ((Button) findViewById(R.id.next)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ManageEventActivity.class);
+                intent.putExtra("user", currentUser);
+                intent.putExtra("typeEvent", 1);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         ((Button) findViewById(R.id.passed)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent(getApplicationContext(), ManageEventActivity.class);
-                intent2.putExtra("user", currentUser);
-                intent2.putExtra("typeEvent", 2);
-                startActivity(intent2);
+                Intent intent = new Intent(getApplicationContext(), ManageEventActivity.class);
+                intent.putExtra("user", currentUser);
+                intent.putExtra("typeEvent", 2);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        ((Button) findViewById(R.id.sub)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ManageEventActivity.class);
+                intent.putExtra("user", currentUser);
+                intent.putExtra("typeEvent", 3);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        ((Button) findViewById(R.id.list_groups)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ManageGroupActivity.class);
+                intent.putExtra("user", currentUser);
+                startActivity(intent);
                 finish();
             }
         });

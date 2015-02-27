@@ -72,6 +72,11 @@
             android:textSize="15dp"
             android:textStyle="bold" />
 
+        <Button
+            android:id="@+id/list_groups"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:hint="List Groups"/>
 
         <LinearLayout
             android:id="@+id/groups"
@@ -121,10 +126,10 @@
                 android:layout_weight="0.5"/>
 
             <Button
-                android:id="@+id/up"
+                android:id="@+id/next"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:hint="Upcomming Events"
+                android:hint="Next Events"
                 android:layout_weight="0.5"/>
 
             </LinearLayout>
