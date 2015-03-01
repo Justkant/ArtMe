@@ -4,6 +4,7 @@ import java.util.List;
 
 import retrofit.Callback;
 import retrofit.http.Body;
+import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.POST;
@@ -32,9 +33,15 @@ public interface ArtmeAPI {
     @POST("/events/{id}/user")
     void subEvent(@Path("id") int id, @Header("TOKEN") String token, Callback<Event> cb);
 
-    @POST("/groups/{id_grp}/user/{id}")
+    @DELETE("/groups/{id_grp}/user/{id}")
     void unsubGroup(@Path("id_grp") int id_grp, @Path("id") int id, @Header("TOKEN") String token, Callback<ApiReturn> cb);
 
+    @DELETE("/groups/{id_grp}")
+    void deleteGroup(@Path("id_grp") int id_grp, @Header("TOKEN") String token, Callback<ApiReturn> cb);
+
     @POST(Constants.C_GROUP)
-    void crtGroup(@Header("TOKEN") String token, @Body String group, Callback<ApiReturn> cb);
+    void crtGroup(@Header("TOKEN") String token, @Body Group group, Callback<ApiReturn> cb);
+
+    @GET("/groups/{id}")
+    void getGroupById(@Path("id") int id, @Header("TOKEN") String token, Callback<Group> cb);
 }

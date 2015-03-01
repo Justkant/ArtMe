@@ -29,5 +29,5 @@ public class User implements Serializable {
     public List<Event> past_events;
     public List<Event> next_events;
 
-    public List<String> photos;
+    //public List<String> photos;
 }

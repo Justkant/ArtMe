@@ -70,25 +70,26 @@ public class ProfilActivity extends ActionBarActivity {
 
         //GROUP
         LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.groups);
-        for (int i = 0; i < 3 && i < currentUser.groups.size(); ++i) {
-            LinearLayout newLinear = (LinearLayout) View.inflate(this, R.layout.group_row, null);
-            if (currentUser.groups.get(i).picture_url != null) {
-                try {
-                    currentUser.groups.get(i).picture_btm = new MyGeneralImageLoader((ImageView) newLinear.findViewById(R.id.group_pic))
-                            .execute(getString(R.string.base_url) + "/" + currentUser.groups.get(i).picture_url)
-                            .get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-            } else
-                ((ImageView) newLinear.findViewById(R.id.group_pic)).setImageResource(R.drawable.df);
-            //ERREUR LORS DE L ENVOIE DANS LES ACTIVITE BITMAP NOT PARCEBLE
-            currentUser.groups.get(i).picture_btm = null;
-            ((TextView) newLinear.findViewById(R.id.group_title)).setText(currentUser.groups.get(i).title);
-            mLinearLayout.addView(newLinear);
-        }
+        if (currentUser.groups != null)
+            for (int i = 0; i < 3 && i < currentUser.groups.size(); ++i) {
+                LinearLayout newLinear = (LinearLayout) View.inflate(this, R.layout.group_row, null);
+                if (currentUser.groups.get(i).picture_url != null) {
+                    try {
+                        currentUser.groups.get(i).picture_btm = new MyGeneralImageLoader((ImageView) newLinear.findViewById(R.id.group_pic))
+                                .execute(getString(R.string.base_url) + "/" + currentUser.groups.get(i).picture_url)
+                                .get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                } else
+                    ((ImageView) newLinear.findViewById(R.id.group_pic)).setImageResource(R.drawable.df);
+                //ERREUR LORS DE L ENVOIE DANS LES ACTIVITE BITMAP NOT PARCEBLE
+                currentUser.groups.get(i).picture_btm = null;
+                ((TextView) newLinear.findViewById(R.id.group_title)).setText(currentUser.groups.get(i).title);
+                mLinearLayout.addView(newLinear);
+            }
 
         //USER NAME
         TextView usernametext = (TextView) findViewById(R.id.username);

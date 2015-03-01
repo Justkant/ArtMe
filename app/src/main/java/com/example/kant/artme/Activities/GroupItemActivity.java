@@ -38,6 +38,7 @@ public class GroupItemActivity extends BaseActivity implements BaseSliderView.On
     private ArtmeAPI api;
     private SliderLayout mDemoSlider;
     private Group group;
+    private boolean isOkAdmin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +112,6 @@ public class GroupItemActivity extends BaseActivity implements BaseSliderView.On
                         .build();
                 restAdapter.setLogLevel(RestAdapter.LogLevel.FULL);
                 api = restAdapter.create(ArtmeAPI.class);
-                Log.d("ID GRP ==> ", String.valueOf(group.id));
-                Log.d("ID USER ==> ", String.valueOf(currentUser.id));
                 api.unsubGroup(group.id, currentUser.id, MySharedPreferences.readToPreferences(getApplicationContext(), getString(R.string.token_string), ""), new Callback<ApiReturn>() {
                     @Override
                     public void success(ApiReturn ret, Response response) {
@@ -124,6 +123,46 @@ public class GroupItemActivity extends BaseActivity implements BaseSliderView.On
                         Log.d("FAIL", retrofitError.getMessage());
                     }
                 });
+            }
+        });
+
+        ((Button) findViewById(R.id.delete)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //API
+                restAdapter = new RestAdapter.Builder()
+                        .setEndpoint(getString(R.string.base_url))
+                        .build();
+                restAdapter.setLogLevel(RestAdapter.LogLevel.FULL);
+                api = restAdapter.create(ArtmeAPI.class);
+
+                //TEST ADMIN
+                api.getGroupById(group.id, MySharedPreferences.readToPreferences(getApplicationContext(), getString(R.string.token_string), ""), new Callback<Group>() {
+                    @Override
+                    public void success(Group group, Response response) {
+                        if (group.can_edit == true)
+                            isOkAdmin = true;
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        Log.d("FAIL", retrofitError.getMessage());
+                    }
+                });
+
+
+                if (isOkAdmin == true)
+                    api.deleteGroup(group.id, MySharedPreferences.readToPreferences(getApplicationContext(), getString(R.string.token_string), ""), new Callback<ApiReturn>() {
+                        @Override
+                        public void success(ApiReturn ret, Response response) {
+                            Toast.makeText(GroupItemActivity.this, "DELETE OK", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError retrofitError) {
+                            Log.d("FAIL", retrofitError.getMessage());
+                        }
+                    });
             }
         });
 

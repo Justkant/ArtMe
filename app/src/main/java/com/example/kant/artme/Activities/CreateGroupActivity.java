@@ -48,17 +48,19 @@ public class CreateGroupActivity extends ActionBarActivity {
             }
         });
 
-        mGroup.title = ((EditText) findViewById(R.id.group_title)).getText().toString();
+
 
         ((Button) findViewById(R.id.send_grp)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mGroup.title = ((EditText) findViewById(R.id.group_title)).getText().toString();
                 //API
                 restAdapter = new RestAdapter.Builder()
                         .setEndpoint(getString(R.string.base_url))
                         .build();
+                restAdapter.setLogLevel(RestAdapter.LogLevel.FULL);
                 api = restAdapter.create(ArtmeAPI.class);
-                api.crtGroup(MySharedPreferences.readToPreferences(getApplicationContext(), getString(R.string.token_string), ""), "{\"title\":\"bite\"}", new Callback<ApiReturn>() {
+                api.crtGroup(MySharedPreferences.readToPreferences(getApplicationContext(), getString(R.string.token_string), ""), mGroup, new Callback<ApiReturn>() {
                     @Override
                     public void success(ApiReturn ret, Response response) {
                         Toast.makeText(CreateGroupActivity.this, "GROUP CREATION OK", Toast.LENGTH_SHORT);

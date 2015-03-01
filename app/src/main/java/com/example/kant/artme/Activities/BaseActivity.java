@@ -102,12 +102,13 @@ public class BaseActivity extends ActionBarActivity implements DrawerAdapter.Cli
                                 .execute(getString(R.string.base_url) + "/" + user.picture_url);
                     }
                     currentUser = user;
+                    Log.d("SAVE CURRENT USER ==> ", "OK");
                     updateUserInfos();
                 }
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
-//                    Log.d("BASE RETROFIT ERROR ===>", retrofitError.getMessage());
+                    Log.d("BASE RETROFIT ERROR ===>", retrofitError.getMessage());
                 }
             });
 

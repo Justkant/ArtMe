@@ -23,4 +23,5 @@ public class Group implements Serializable {
     public List<Event> next_events;
     public List<Event> pass_events;
     public List<String> photos;
+    public boolean can_edit;
 }

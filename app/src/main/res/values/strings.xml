@@ -103,5 +103,6 @@
     <string name="groupe_title">Title</string>
     <string name="send_grp">Send</string>
     <string name="title_activity_creat_group">Create Group</string>
+    <string name="delete_grp">Delete Group</string>
 
 </resources>
