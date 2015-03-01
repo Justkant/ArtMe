@@ -99,5 +99,9 @@
     <string name="title_activity_pass_event">PASS EVENT</string>
     <string name="title_activity_sub_event">SUBSCRIBE EVENTS</string>
     <string name="title_activity_groups">Groups</string>
+    <string name="unsub_grp">Unsuscribe</string>
+    <string name="groupe_title">Title</string>
+    <string name="send_grp">Send</string>
+    <string name="title_activity_creat_group">Create Group</string>
 
 </resources>

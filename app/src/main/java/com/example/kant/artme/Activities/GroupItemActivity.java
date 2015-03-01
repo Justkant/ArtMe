@@ -3,6 +3,7 @@ package com.example.kant.artme.Activities;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.example.kant.artme.ArtmeAPI.ApiReturn;
 import com.example.kant.artme.ArtmeAPI.ArtmeAPI;
 import com.example.kant.artme.ArtmeAPI.Event;
 import com.example.kant.artme.ArtmeAPI.Group;
@@ -18,6 +20,7 @@ import com.example.kant.artme.MyGeneralImageLoader;
 import com.example.kant.artme.MySharedPreferences;
 import com.example.kant.artme.R;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
@@ -97,6 +100,33 @@ public class GroupItemActivity extends BaseActivity implements BaseSliderView.On
             }
         else
             ((ImageView) findViewById(R.id.title_pic)).setImageResource(R.drawable.df);
+
+
+        ((Button) findViewById(R.id.unsub)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //API
+                restAdapter = new RestAdapter.Builder()
+                        .setEndpoint(getString(R.string.base_url))
+                        .build();
+                restAdapter.setLogLevel(RestAdapter.LogLevel.FULL);
+                api = restAdapter.create(ArtmeAPI.class);
+                Log.d("ID GRP ==> ", String.valueOf(group.id));
+                Log.d("ID USER ==> ", String.valueOf(currentUser.id));
+                api.unsubGroup(group.id, currentUser.id, MySharedPreferences.readToPreferences(getApplicationContext(), getString(R.string.token_string), ""), new Callback<ApiReturn>() {
+                    @Override
+                    public void success(ApiReturn ret, Response response) {
+                        Toast.makeText(GroupItemActivity.this, "UNSUB OK", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        Log.d("FAIL", retrofitError.getMessage());
+                    }
+                });
+            }
+        });
+
     }
 
     @Override

@@ -147,6 +147,15 @@ public class ProfilActivity extends ActionBarActivity {
             }
         });
 
+        ((Button) findViewById(R.id.create_grp)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CreateGroupActivity.class);
+                intent.putExtra("user", currentUser);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
 }

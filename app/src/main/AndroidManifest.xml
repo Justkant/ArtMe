@@ -26,6 +26,7 @@
         <activity android:name=".Activities.UpcomingEventActivity"/>
         <activity android:name=".Activities.ManageGroupActivity"/>
         <activity android:name=".Activities.GroupItemActivity"/>
+        <activity android:name=".Activities.CreateGroupActivity"/>
 
 
     </application>
